@@ -20,6 +20,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4047015171395518}
   - component: {fileID: 212362527888955676}
+  - component: {fileID: 50088853949895310}
+  - component: {fileID: 114437244091512380}
   m_Layer: 0
   m_Name: 'disparo lateral derecha '
   m_TagString: Untagged
@@ -40,6 +42,42 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &50088853949895310
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1074606095270200}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!114 &114437244091512380
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1074606095270200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b2e1f09b089b7445ab417e1c168b5e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Speed: 15
+  posX: 0
+  posY: 0
+  orientationx: 0
+  orientationy: 0
 --- !u!212 &212362527888955676
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -73,7 +111,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: c7c78696752405d4ab896fbbc08c3cd5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
