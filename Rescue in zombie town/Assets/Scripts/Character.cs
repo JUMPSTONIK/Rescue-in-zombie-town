@@ -23,11 +23,16 @@ public class Character : MonoBehaviour
     public Rigidbody2D rbbaladiagyx;
     public GameObject baladiagyx;
 
+    private Animator anim;
+
     private float lh;
     private float lv;
 
     public static float dirx = -1;
     public static float diry = 0;
+
+    public float animx = 0;
+    public float animy = 0;
 
 
     // Use this for initialization
@@ -38,6 +43,8 @@ public class Character : MonoBehaviour
         rbbalay = GetComponent<Rigidbody2D>();
         rbbaladiagxy = GetComponent<Rigidbody2D>();
         rbbaladiagyx = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
+
     }
 
     // Update is called once per frame
@@ -93,7 +100,17 @@ public class Character : MonoBehaviour
             diry = -1;
         }
 
+        animy = diry;
+        animx = dirx;
 
+        if (lv == 0 && lh == 0)
+        {
+
+            animy = 0;
+            animx = 0;
+        }
+
+        anim.SetFloat("speedy", animy);
 
         //movimiento del personaje en X y Y
         movement = new Vector2(lh, lv);
@@ -142,6 +159,10 @@ public class Character : MonoBehaviour
                 rbbaladiagyx.transform.Translate(movement * speedbala * Time.deltaTime);
             }
         }
+
+
+        animy = 0;
+        animx = 0;
 
     }
 }
