@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class Character : MonoBehaviour
 {
@@ -34,6 +36,7 @@ public class Character : MonoBehaviour
     public float animx = 0;
     public float animy = 0;
 
+    protected Joystick joystick;
 
     // Use this for initialization
     void Start()
@@ -44,6 +47,8 @@ public class Character : MonoBehaviour
         rbbaladiagxy = GetComponent<Rigidbody2D>();
         rbbaladiagyx = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        joystick = FindObjectOfType<Joystick>();
+
 
     }
 
@@ -51,55 +56,76 @@ public class Character : MonoBehaviour
     void Update()
     {
         //capturando el movimiento
-        lh = Input.GetAxis("Horizontal");
-        lv = Input.GetAxis("Vertical");
+        lh = joystick.Horizontal + Input.GetAxis("Horizontal");
+        lv = joystick.Vertical + Input.GetAxis("Vertical");
 
         //comprobando ultima direccion que ha visto para disparar
-        //estos funcionan para los disparos horizontales
-        if (lh > 0 && lv == 0)
-        {
-            dirx = 1;
-            diry = 0;
-        }
-        if (lh < 0 && lv == 0)
-        {
-            dirx = -1;
-            diry = 0;
-        }
-        //esto funciona para los disparos verticales
-        if (lv > 0 && lh == 0)
-        {
-            dirx = 0;
-            diry = 1;
-        }
-        if (lv < 0 && lh == 0)
-        {
-            dirx = 0;
-            diry = -1;
-        }
         //esto funciona para las diagonales /
         if (lh >= 0.5 && lv >= 0.5)
         {
             dirx = 1;
             diry = 1;
         }
-        if (lh < -0.5 && lv < -0.5)
+        else
         {
-            dirx = -1;
-            diry = -1;
+            if (lh < -0.5 && lv < -0.5)
+            {
+                dirx = -1;
+                diry = -1;
+            }
+            else
+            {
+                // esto funciona para las diagonales \
+                if (lv >= 0.5 && lh <= -0.5)
+                {
+                    dirx = -1;
+                    diry = 1;
+                }
+                else
+                {
+                    if (lv <= -0.5 && lh >= 0.5)
+                    {
+                        dirx = 1;
+                        diry = -1;
+                    }
+                    else
+                    {
+                        //estos funcionan para los disparos horizontales
+                        if (lh > 0 && lh >= Mathf.Abs(lv))
+                        {
+                            dirx = 1;
+                            diry = 0;
+                        }
+                        else
+                        {
+                            if (lh < 0 && Mathf.Abs(lh) >= Mathf.Abs(lv))
+                            {
+                                dirx = -1;
+                                diry = 0;
+                            }
+                            else
+                            {
+                                //esto funciona para los disparos verticales
+                                if (lv > 0 && lv >= Mathf.Abs(lh))
+                                {
+                                    dirx = 0;
+                                    diry = 1;
+                                }
+                                else
+                                {
+                                    if (lv < 0 && Mathf.Abs(lv) >= Mathf.Abs(lh))
+                                    {
+                                        dirx = 0;
+                                        diry = -1;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
-        // esto funciona para las diagonales \
-        if (lv >= 0.5 && lh <= -0.5)
-        {
-            dirx = -1;
-            diry = 1;
-        }
-        if (lv <= -0.5 && lh >= 0.5)
-        {
-            dirx = 1;
-            diry = -1;
-        }
-
+        
         animy = diry;
         animx = dirx;
 
@@ -118,46 +144,7 @@ public class Character : MonoBehaviour
 
         if (Input.GetButtonDown("Jump"))
         {
-            if (dirx == 1 && diry == 0)
-            {
-                Instantiate(balax, new Vector3(rbchara.position.x, rbchara.position.y, 0), Quaternion.identity);
-                rbbalax.transform.Translate(movement * speedbala * Time.deltaTime);
-            }
-            if (dirx == -1 && diry == 0)
-            {
-                Instantiate(balax, new Vector3(rbchara.position.x, rbchara.position.y, 0), Quaternion.identity);
-                rbbalax.transform.Translate(movement * speedbala * Time.deltaTime);
-            }
-            if (diry == 1 && dirx == 0)
-            {
-                Instantiate(balay, new Vector3(rbchara.position.x, rbchara.position.y, 0), Quaternion.identity);
-                rbbalay.transform.Translate(movement * speedbala * Time.deltaTime);
-            }
-            if (diry == -1 && dirx == 0)
-            {
-                Instantiate(balay, new Vector3(rbchara.position.x, rbchara.position.y, 0), Quaternion.identity);
-                rbbalay.transform.Translate(movement * speedbala * Time.deltaTime);
-            }
-            if (diry == 1 && dirx == 1)
-            {
-                Instantiate(baladiagxy, new Vector3(rbchara.position.x, rbchara.position.y, 0), Quaternion.identity);
-                rbbaladiagxy.transform.Translate(movement * speedbala * Time.deltaTime);
-            }
-            if (diry == -1 && dirx == -1)
-            {
-                Instantiate(baladiagxy, new Vector3(rbchara.position.x, rbchara.position.y, 0), Quaternion.identity);
-                rbbaladiagxy.transform.Translate(movement * speedbala * Time.deltaTime);
-            }
-            if (dirx == -1 && diry == 1 )
-            {
-                Instantiate(baladiagyx, new Vector3(rbchara.position.x, rbchara.position.y, 0), Quaternion.identity);
-                rbbaladiagyx.transform.Translate(movement * speedbala * Time.deltaTime);
-            }
-            if (diry == -1 && dirx == 1)
-            {
-                Instantiate(baladiagyx, new Vector3(rbchara.position.x, rbchara.position.y, 0), Quaternion.identity);
-                rbbaladiagyx.transform.Translate(movement * speedbala * Time.deltaTime);
-            }
+            shoot();
         }
 
 
@@ -165,4 +152,49 @@ public class Character : MonoBehaviour
         animx = 0;
 
     }
+
+    public void shoot()
+    {
+        if (dirx == 1 && diry == 0)
+        {
+            Instantiate(balax, new Vector3(rbchara.position.x, rbchara.position.y, 0), Quaternion.identity);
+            rbbalax.transform.Translate(movement * speedbala * Time.deltaTime);
+        }
+        if (dirx == -1 && diry == 0)
+        {
+            Instantiate(balax, new Vector3(rbchara.position.x, rbchara.position.y, 0), Quaternion.identity);
+            rbbalax.transform.Translate(movement * speedbala * Time.deltaTime);
+        }
+        if (diry == 1 && dirx == 0)
+        {
+            Instantiate(balay, new Vector3(rbchara.position.x, rbchara.position.y, 0), Quaternion.identity);
+            rbbalay.transform.Translate(movement * speedbala * Time.deltaTime);
+        }
+        if (diry == -1 && dirx == 0)
+        {
+            Instantiate(balay, new Vector3(rbchara.position.x, rbchara.position.y, 0), Quaternion.identity);
+            rbbalay.transform.Translate(movement * speedbala * Time.deltaTime);
+        }
+        if (diry == 1 && dirx == 1)
+        {
+            Instantiate(baladiagxy, new Vector3(rbchara.position.x, rbchara.position.y, 0), Quaternion.identity);
+            rbbaladiagxy.transform.Translate(movement * speedbala * Time.deltaTime);
+        }
+        if (diry == -1 && dirx == -1)
+        {
+            Instantiate(baladiagxy, new Vector3(rbchara.position.x, rbchara.position.y, 0), Quaternion.identity);
+            rbbaladiagxy.transform.Translate(movement * speedbala * Time.deltaTime);
+        }
+        if (dirx == -1 && diry == 1)
+        {
+            Instantiate(baladiagyx, new Vector3(rbchara.position.x, rbchara.position.y, 0), Quaternion.identity);
+            rbbaladiagyx.transform.Translate(movement * speedbala * Time.deltaTime);
+        }
+        if (diry == -1 && dirx == 1)
+        {
+            Instantiate(baladiagyx, new Vector3(rbchara.position.x, rbchara.position.y, 0), Quaternion.identity);
+            rbbaladiagyx.transform.Translate(movement * speedbala * Time.deltaTime);
+        }
+    }
+
 }

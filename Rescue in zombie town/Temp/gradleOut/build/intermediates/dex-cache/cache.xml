@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="C:\Users\JUMPSTONIK\Documents\Rescue in zombie town\Temp\gradleOut\libs\unity-classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="27.0.1"
+        sha1="a81d8eeaeba8596486304110d572e34e9093433b">
+        <dex dex="C:\Users\JUMPSTONIK\Documents\Rescue in zombie town\Temp\gradleOut\build\intermediates\pre-dexed\release\unity-classes_ccc195e2872b79eaf5c4e993a414b16679bc3e5d.jar" />
+    </item>
+
+</items>
