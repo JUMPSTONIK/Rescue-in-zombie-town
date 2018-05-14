@@ -7,8 +7,8 @@ public class mounsterSpawner : MonoBehaviour {
     public GameObject Zombie1;
     public Vector2 center;
     public Vector2 size;
-    public int cont = 0;
     public float spawnTime = 0;
+    public static int contEnemies = 0;
 
 
 	// Use this for initialization
@@ -21,9 +21,9 @@ public class mounsterSpawner : MonoBehaviour {
         spawnTime += Time.deltaTime;
         if (spawnTime > 5)
         {
-            if (cont <5)
+            if (contEnemies <30)
             {
-                cont++;
+                contEnemies++;
                 SpawnMounster();
                 spawnTime = 0;
             }

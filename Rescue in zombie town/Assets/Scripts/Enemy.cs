@@ -11,21 +11,33 @@ public class Enemy : MonoBehaviour {
     private float movetime = 0;
     private Vector2 movimiento;
 
+    private Animator anim;
+    public float animx = 0;
+    public float animy = 0;
+    public mounsterSpawner MS;
+
     // Use this for initialization
     void Start () {
         player = GameObject.FindGameObjectWithTag("Player");
-		
-	}
+        anim = GetComponent<Animator>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
+
+
         if (movetime <0.1)
         {
-            float x = Random.Range(5, -5);
-            float y = Random.Range(5, -5);
+            float x = Random.Range(3, -3);
+            float y = Random.Range(3, -3);
+
+            animx = x;
+            animy = y;
             movimiento = new Vector2(x * Time.deltaTime, y * Time.deltaTime);
+
         }
-        
+        anim.SetFloat("speedy", animy);
+        anim.SetFloat("speedx", animx);
         Vector3 target = new Vector3(transform.localPosition.x, transform.localPosition.y);
 
         float dist = Vector3.Distance(player.transform.position, transform.position);
@@ -64,6 +76,7 @@ public class Enemy : MonoBehaviour {
         Debug.Log("me han dado");
         if (collision.gameObject.tag == "Shoot1")
         {
+            mounsterSpawner.contEnemies -= 1;
             Debug.Log("me destruyo");
             Destroy(gameObject);
         }
