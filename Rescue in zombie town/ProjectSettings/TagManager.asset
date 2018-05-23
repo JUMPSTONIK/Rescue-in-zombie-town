@@ -6,6 +6,10 @@ TagManager:
   tags:
   - zombie
   - Shoot1
+  - limitizq
+  - limitup
+  - limitright
+  - limitdown
   layers:
   - Default
   - TransparentFX

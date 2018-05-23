@@ -54,10 +54,10 @@ public class shoot : MonoBehaviour {
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("le dispare");
+        
         if (collision.gameObject.tag == "zombie")
         {
-            Debug.Log("lo mate");
+            Character.puntos += 10;
             Destroy(gameObject);
         }
     }

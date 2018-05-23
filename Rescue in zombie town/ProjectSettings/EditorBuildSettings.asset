@@ -5,9 +5,18 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
+    path: Assets/Scene/gameover.unity
+    guid: faebc2200827a3545814ff7608f48b85
+  - enabled: 1
+    path: Assets/Scene/intro_Screen.unity
+    guid: 076057674f86c8f4290996be32d6d196
+  - enabled: 1
+    path: Assets/Scene/score.unity
+    guid: 77af738d2782cc8448933b488dd7d971
+  - enabled: 1
     path: Assets/Scene/principal.unity
     guid: 15a839567115eb9408f5d7bd49df1d75
-  - enabled: 1
-    path: Assets/Virtual Joystick Pack/Example/Demo Scene.unity
-    guid: c71202a3942b6f84bbe9b305a1bcec17
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000

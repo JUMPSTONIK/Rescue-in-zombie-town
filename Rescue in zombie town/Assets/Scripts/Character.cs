@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Character : MonoBehaviour
 {
+    public static int life = 5;
+    public static int puntos = 0;
 
     private float moveSpeed = 5f;
     private float speedbala = 3f;
@@ -36,28 +39,30 @@ public class Character : MonoBehaviour
     public float animx = 0;
     public float animy = 0;
 
-    protected Joystick joystick;
+    public Virtual_Joystick joystick;
+
+    public AudioClip soundshoot;
+    public cambio_De_Escena change;
 
     // Use this for initialization
     void Start()
-    {
+    {   
         rbchara = GetComponent<Rigidbody2D>();
         rbbalax = GetComponent<Rigidbody2D>();
         rbbalay = GetComponent<Rigidbody2D>();
         rbbaladiagxy = GetComponent<Rigidbody2D>();
         rbbaladiagyx = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        joystick = FindObjectOfType<Joystick>();
-
-
+        soundshoot = GetComponent<AudioClip>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //capturando el movimiento
-        lh = joystick.Horizontal + Input.GetAxis("Horizontal");
-        lv = joystick.Vertical + Input.GetAxis("Vertical");
+
+        //capturando el movimiento con el joystick y el teclado
+        lh = joystick.Horizontal();
+        lv = joystick.Vertical();
 
         //comprobando ultima direccion que ha visto para disparar
         //esto funciona para las diagonales /
@@ -125,7 +130,7 @@ public class Character : MonoBehaviour
                 }
             }
         }
-        
+        anim.SetBool("disparo", false);
         animy = diry;
         animx = dirx;
 
@@ -137,6 +142,8 @@ public class Character : MonoBehaviour
         }
 
         anim.SetFloat("speedy", animy);
+        anim.SetFloat("speedx", animx);
+        
 
         //movimiento del personaje en X y Y
         movement = new Vector2(lh, lv);
@@ -151,10 +158,21 @@ public class Character : MonoBehaviour
         animy = 0;
         animx = 0;
 
+        if (life <= 0)
+        {
+            Debug.Log("estoy dentro");
+            change.ir_gameover();
+        }
+
     }
 
     public void shoot()
     {
+        
+        anim.SetInteger("Dirx", (int)dirx);
+        anim.SetInteger("Diry", (int)diry);
+        anim.SetBool("disparo", true);
+       
         if (dirx == 1 && diry == 0)
         {
             Instantiate(balax, new Vector3(rbchara.position.x, rbchara.position.y, 0), Quaternion.identity);
@@ -195,6 +213,11 @@ public class Character : MonoBehaviour
             Instantiate(baladiagyx, new Vector3(rbchara.position.x, rbchara.position.y, 0), Quaternion.identity);
             rbbaladiagyx.transform.Translate(movement * speedbala * Time.deltaTime);
         }
+        
+    }
+    public int getscore()
+    {
+        return puntos;
     }
 
 }
